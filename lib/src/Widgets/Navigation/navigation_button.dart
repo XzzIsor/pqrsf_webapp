@@ -26,6 +26,7 @@ class NavigationButton extends StatelessWidget {
       foregroundColor: Colors.black,
       overlayColor: Colors.black26,
       overlayOpacity: 0.5,
+      closeManually: false,
       spaceBetweenChildren: size.longestSide / size.shortestSide * 2,
       animatedIcon: AnimatedIcons.menu_close,
       openCloseDial: isDialOpen,
@@ -39,7 +40,8 @@ class NavigationButton extends StatelessWidget {
           child: const Icon(Icons.data_array),
           label: 'Registrar',
           onTap: () {
-            //Navigator.pushReplacementNamed(context, '/user');
+            Navigator.pushReplacementNamed(context, '/register');
+
             isDialOpen.value = false;
           },
         ),
@@ -49,7 +51,7 @@ class NavigationButton extends StatelessWidget {
           label: 'Mostrar',
           onTap: () {
             isDialOpen.value = false;
-            //Navigator.pushReplacementNamed(context, '/period');
+            Navigator.pushReplacementNamed(context, '/show');
           },
         ),
         SpeedDialChild(
