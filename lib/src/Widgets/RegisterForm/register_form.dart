@@ -1,7 +1,9 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 import 'package:flutter/material.dart';
+import 'package:pqrsf_webapp/src/Controllers/controllers.dart';
 import 'package:pqrsf_webapp/src/Widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class RegisterForm extends StatefulWidget {
   RegisterForm({Key? key}) : super(key: key);
@@ -13,36 +15,16 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>();
 
-  List<String> tipoPeticionario = [
-    'Estudiante de pregrado',
-    'Estudiante de Posgrado',
-    'Empleado',
-    'Docente',
-    'Egresado',
-    'Jubilado',
-    'Persona Externa'
-  ];
-
-  List<String> tipoDependencia = [
-    'Dependencia 1',
-    'Dependencia 2',
-    'Dependencia 3',
-    'Dependencia 4',
-    'Dependencia 5'
-  ];
-
-  List<String> tipoPQRSF = [
-    'Petición',
-    'Queja',
-    'Reclamo',
-    'Sugerencia',
-    'Felicitación'
-  ];
-
-  List<String> tipoMedioRecepcion = ['Web', 'Físico'];
-
   @override
   Widget build(BuildContext context) {
+    DataInfoController dataInfoController =
+        Provider.of<DataInfoController>(context);
+
+    List<String> tipoPeticionario = dataInfoController.getPeticionaryTypes();
+    List<String> tipoDependencia = dataInfoController.getDependencies();
+    List<String> tipoPQRSF = dataInfoController.getTransactTypes();
+    List<String> tipoMedioRecepcion = dataInfoController.getReceptionTypes();
+
     final Size size = MediaQuery.of(context).size;
     return Form(
       key: _formKey,
@@ -72,7 +54,10 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
             ),
             Row(
-              children: [_column1(size), _column2(size)],
+              children: [
+                _column1(size, tipoPeticionario, tipoPQRSF),
+                _column2(size, tipoDependencia, tipoMedioRecepcion)
+              ],
             ),
             SizedBox(height: size.height * 0.01),
             _saveButton(size)
@@ -82,7 +67,8 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
-  Widget _column1(Size size) {
+  Widget _column1(
+      Size size, List<String> tipoPeticionario, List<String> tipoPQRSF) {
     double heightS = size.height * 0.045;
 
     return Container(
@@ -148,7 +134,8 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
-  Widget _column2(Size size) {
+  Widget _column2(Size size, List<String> tipoDependencia,
+      List<String> tipoMedioRecepcion) {
     double heightS = size.height * 0.045;
     return Container(
       width: size.width * 0.25,

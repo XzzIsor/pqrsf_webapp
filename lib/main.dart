@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:pqrsf_webapp/src/Views/show_page.dart';
 import 'package:pqrsf_webapp/src/Views/views.dart';
 
@@ -9,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'PQRSF Unicauca',
-      initialRoute: '/show',
+      initialRoute: '/register',
       routes: {
         '/register': (context) => const RegisterPage(),
         '/show': (context) => const ShowPage()

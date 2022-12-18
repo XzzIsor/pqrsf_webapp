@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:pqrsf_webapp/src/Models/models.dart';
 import 'package:pqrsf_webapp/src/apilink.dart';
 
-class TransactController {
+class TransactController extends ChangeNotifier {
   Future<List<TableTransact>> getAllTransacts() async {
     List<TableTransact> transacts = [];
 

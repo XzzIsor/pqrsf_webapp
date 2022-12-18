@@ -39,19 +39,18 @@ class NavigationButton extends StatelessWidget {
           backgroundColor: color,
           child: const Icon(Icons.data_array),
           label: 'Registrar',
-          onTap: () {
-            Navigator.pushReplacementNamed(context, '/register');
-
+          onTap: () async {
             isDialOpen.value = false;
+            await Navigator.pushReplacementNamed(context, '/register');
           },
         ),
         SpeedDialChild(
           backgroundColor: color,
           child: const Icon(Icons.remove_red_eye),
           label: 'Mostrar',
-          onTap: () {
+          onTap: () async {
             isDialOpen.value = false;
-            Navigator.pushReplacementNamed(context, '/show');
+            await Navigator.pushReplacementNamed(context, '/show');
           },
         ),
         SpeedDialChild(
@@ -67,9 +66,9 @@ class NavigationButton extends StatelessWidget {
           backgroundColor: color,
           child: const Icon(Icons.document_scanner),
           label: 'Informe',
-          onTap: () {
+          onTap: () async {
+            //await Navigator.pushReplacementNamed(context, '/schedule');
             isDialOpen.value = false;
-            //Navigator.pushReplacementNamed(context, '/schedule');
           },
         ),
         SpeedDialChild(
