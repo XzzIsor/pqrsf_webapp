@@ -10,7 +10,7 @@ class CustomDropdown extends StatefulWidget {
       required this.icon})
       : super(key: key);
 
-  final List items;
+  final List<String> items;
   final String label;
   final Color? iconColor;
   final IconData icon;

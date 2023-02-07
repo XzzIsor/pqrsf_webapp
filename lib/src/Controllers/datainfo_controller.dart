@@ -84,7 +84,7 @@ class DataInfoController extends ChangeNotifier {
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
 
-      _dependencies.clear();
+      _transactsTypes.clear();
 
       for (var element in data) {
         _transactsTypes.add(TransactType.fromJson(element));
@@ -103,7 +103,7 @@ class DataInfoController extends ChangeNotifier {
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
 
-      _dependencies.clear();
+      _receptionTypes.clear();
 
       for (var element in data) {
         _receptionTypes.add(ReceptionType.fromJson(element));
@@ -114,7 +114,7 @@ class DataInfoController extends ChangeNotifier {
   }
 
   Future<void> _getPeticionaryTypes() async {
-    const url = '$apiLink/catalogo/tipo-recepcion';
+    const url = '$apiLink/catalogo/tipo-peticionario';
     Uri uri = Uri.parse(url);
 
     final response = await http.get(uri);
@@ -122,7 +122,7 @@ class DataInfoController extends ChangeNotifier {
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
 
-      _dependencies.clear();
+      _peticionaryTypes.clear();
 
       for (var element in data) {
         _peticionaryTypes.add(PeticionaryType.fromJson(element));

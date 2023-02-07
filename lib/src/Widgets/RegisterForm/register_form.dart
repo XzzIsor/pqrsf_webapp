@@ -214,8 +214,8 @@ class _RegisterFormState extends State<RegisterForm> {
           onPressed: () {},
           style: ElevatedButton.styleFrom(
             elevation: 12,
-            primary: buttonColor,
-            onPrimary: messageColor,
+            backgroundColor: buttonColor,
+            foregroundColor: messageColor,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             textStyle: TextStyle(

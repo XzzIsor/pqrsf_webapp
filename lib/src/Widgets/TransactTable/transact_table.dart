@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pqrsf_webapp/src/Controllers/controllers.dart';
+import 'package:web_date_picker/web_date_picker.dart';
 
 import '../../Models/models.dart';
 
@@ -14,6 +15,16 @@ class TransactTable extends StatefulWidget {
 class _TransactTableState extends State<TransactTable> {
   List<Transact> transacts = [];
   TransactController transactController = TransactController();
+  bool intimeStatus = false;
+  bool overdueStatus = false;
+  bool failStatus = false;
+  bool petitionStatus = false;
+  bool complaingStatus = false;
+  bool reclaimStatus = false;
+  bool adviceStatus = false;
+  bool congratulationStatus = false;
+  String dateInitial = 'dd/mm/YY';
+  String dateFinal = 'dd/mm/YY';
 
   @override
   Widget build(BuildContext context) {
@@ -124,8 +135,8 @@ class _TransactTableState extends State<TransactTable> {
               onPressed: function,
               child: Icon(icon, size: size.aspectRatio * 6),
               style: ElevatedButton.styleFrom(
-                primary: color,
-                onPrimary: Colors.white,
+                backgroundColor: color,
+                foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -216,7 +227,7 @@ class _TransactTableState extends State<TransactTable> {
   }
 
   Widget _filtrationSection(Size size) {
-    TextStyle _textStyle = TextStyle(
+    TextStyle textStyle = TextStyle(
         color: Colors.white,
         fontSize: size.aspectRatio * 15,
         fontWeight: FontWeight.bold);
@@ -230,11 +241,20 @@ class _TransactTableState extends State<TransactTable> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Estado', style: _textStyle),
+                  Text('Estado', style: textStyle),
                   SizedBox(height: size.height * 0.01),
-                  _checkBoxTile(size, false, 'Favorable', Colors.green[700]!),
-                  _checkBoxTile(size, false, 'Atrasado', Colors.yellow[700]!),
-                  _checkBoxTile(size, false, 'Vencido', Colors.red[700]!)
+                  _checkBoxTile(size, (value) {
+                    setState(() {});
+                    intimeStatus = !intimeStatus;
+                  }, intimeStatus, 'Favorable', Colors.green[700]!),
+                  _checkBoxTile(size, (value) {
+                    setState(() {});
+                    overdueStatus = !overdueStatus;
+                  }, overdueStatus, 'Atrasado', Colors.yellow[700]!),
+                  _checkBoxTile(size, (value) {
+                    setState(() {});
+                    failStatus = !failStatus;
+                  }, failStatus, 'Vencido', Colors.red[700]!)
                 ],
               ),
               SizedBox(width: size.width * 0.02),
@@ -242,30 +262,104 @@ class _TransactTableState extends State<TransactTable> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Tipo PQRSF', style: _textStyle),
+                  Text('Tipo PQRSF', style: textStyle),
                   SizedBox(height: size.height * 0.01),
-                  _checkBoxTile(size, false, 'Petición', Colors.white),
-                  _checkBoxTile(size, false, 'Queja', Colors.white),
-                  _checkBoxTile(size, false, 'Reclamo', Colors.white)
+                  _checkBoxTile(size, (value) {
+                    setState(() {});
+                    petitionStatus = !petitionStatus;
+                  }, petitionStatus, 'Petición', Colors.white),
+                  _checkBoxTile(size, (value) {
+                    setState(() {});
+                    complaingStatus = !complaingStatus;
+                  }, complaingStatus, 'Queja', Colors.white),
+                  _checkBoxTile(size, (value) {
+                    setState(() {});
+                    reclaimStatus = !reclaimStatus;
+                  }, reclaimStatus, 'Reclamo', Colors.white)
                 ],
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('', style: _textStyle),
+                  Text('', style: textStyle),
                   SizedBox(height: size.height * 0.01),
-                  _checkBoxTile(size, false, 'Sugerencia', Colors.white),
-                  _checkBoxTile(size, false, 'Felicitación', Colors.white),
+                  _checkBoxTile(size, (value) {
+                    setState(() {});
+                    adviceStatus = !adviceStatus;
+                  }, adviceStatus, 'Sugerencia', Colors.white),
+                  _checkBoxTile(size, (value) {
+                    setState(() {});
+                    congratulationStatus = !congratulationStatus;
+                  }, congratulationStatus, 'Felicitación', Colors.white),
                 ],
               ),
+              SizedBox(width: size.width * 0.02),
+              _dateTile(textStyle, size)
             ],
           ),
         ));
   }
 
-  Widget _checkBoxTile(Size size, bool status, String message, Color color) {
-    TextStyle _textStyle = TextStyle(
+  Column _dateTile(TextStyle textStyle, Size size) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Intervalo Fecha', style: textStyle),
+        SizedBox(
+          height: size.height * 0.01,
+        ),
+        Row(
+          children: [
+            Text(
+              dateInitial,
+              style: textStyle,
+            ),
+            IconButton(
+                onPressed: () async {
+                  DateTime? date = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2025),
+                      helpText: 'Seleccione una fecha',
+                      errorFormatText: 'Formato de fecha inválido');
+
+                  DateFormat formatter = DateFormat("dd/MM/yy");
+                  dateInitial = formatter.format(date!);
+                  setState(() {});
+                },
+                icon: const Icon(Icons.calendar_month, color: Colors.white)),
+            Text(' -  ', style: textStyle),
+            Text(dateFinal, style: textStyle),
+            IconButton(
+                onPressed: () async {
+                  DateTime? date = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2025),
+                      helpText: 'Seleccione una fecha',
+                      errorFormatText: 'Formato de fecha inválido');
+
+                  DateFormat formatter = DateFormat("dd/MM/yy");
+                  dateFinal = formatter.format(date!);
+                  setState(() {});
+                },
+                icon: const Icon(
+                  Icons.calendar_month,
+                  color: Colors.white,
+                )),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _checkBoxTile(Size size, Function(bool?) onChange, bool status,
+      String message, Color color) {
+    TextStyle textStyle = TextStyle(
         color: color,
         fontSize: size.aspectRatio * 12,
         fontWeight: FontWeight.bold);
@@ -276,18 +370,14 @@ class _TransactTableState extends State<TransactTable> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Checkbox(
-            checkColor: color,
-            value: status,
-            shape: const CircleBorder(),
-            onChanged: (bool? value) {
-              setState(() {
-                status = value!;
-              });
-            },
-          ),
+              activeColor: color,
+              checkColor: color,
+              value: status,
+              shape: const CircleBorder(),
+              onChanged: onChange),
           Text(
             message,
-            style: _textStyle,
+            style: textStyle,
           )
         ],
       ),

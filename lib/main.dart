@@ -12,8 +12,11 @@ class MyApp extends StatelessWidget {
       title: 'PQRSF Unicauca',
       initialRoute: '/register',
       routes: {
-        '/register': (context) => const RegisterPage(),
-        '/show': (context) => const ShowPage()
+        '/register': (_) => const RegisterPage(),
+        '/show': (_) => const ShowPage(),
+        '/consult': (_) => const ConsultPage(),
+        '/info': (_) => const InformPage(),
+        '/download': (_) => const InformGeneratePage()
       },
     );
   }

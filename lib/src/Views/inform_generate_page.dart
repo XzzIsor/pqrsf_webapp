@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pqrsf_webapp/src/Widgets/widgets.dart';
 
-class ShowPage extends StatelessWidget {
-  const ShowPage({Key? key}) : super(key: key);
+class InformGeneratePage extends StatelessWidget {
+  const InformGeneratePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: NavigationButton(),
       body: Stack(
-        children: [BackgroundTheme(), TransactTable()],
+        children: const [BackgroundTheme(), DownloadSection()],
       ),
     );
   }
