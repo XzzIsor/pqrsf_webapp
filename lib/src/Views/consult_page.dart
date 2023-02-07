@@ -10,7 +10,7 @@ class ConsultPage extends StatelessWidget {
     return Scaffold(
         floatingActionButton: NavigationButton(),
         body: Stack(
-          children: const [BackgroundTheme(), SearchRow(), InfoPanel()],
+          children: [BackgroundTheme(), SearchRow(), InfoPanel(), TraceBar()],
         ));
   }
 }

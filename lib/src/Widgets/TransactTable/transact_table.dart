@@ -13,8 +13,8 @@ class TransactTable extends StatefulWidget {
 }
 
 class _TransactTableState extends State<TransactTable> {
-  List<Transact> transacts = [];
   TransactController transactController = TransactController();
+  List<TransactTable> transactList = [];
   bool intimeStatus = false;
   bool overdueStatus = false;
   bool failStatus = false;
@@ -25,6 +25,9 @@ class _TransactTableState extends State<TransactTable> {
   bool congratulationStatus = false;
   String dateInitial = 'dd/mm/YY';
   String dateFinal = 'dd/mm/YY';
+  int? numVU;
+  int? type;
+  bool filter = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +59,9 @@ class _TransactTableState extends State<TransactTable> {
                         borderRadius: BorderRadius.circular(10)),
                     height: _size.height * 0.6,
                     child: FutureBuilder<List<TableTransact>>(
-                        future: transactController.getAllTransacts(),
+                        future: !filter
+                            ? transactController.getAllTransacts()
+                            : transactController.filterTransacts(numVU, type),
                         builder: ((context, listTransacts) {
                           List<TableTransact> tableTrasacts = [
                             TableTransact(
@@ -164,7 +169,18 @@ class _TransactTableState extends State<TransactTable> {
       height: size.height * 0.08,
       width: size.width * 0.15,
       child: TextField(
-        onChanged: (value) {},
+        onChanged: (value) {
+          if (int.tryParse(value) != null) {
+            setState(() {});
+            numVU = int.parse(value);
+            filter = true;
+          }
+          if (value == "") {
+            setState(() {});
+            numVU = null;
+            filter = false;
+          }
+        },
         style: TextStyle(
             height: size.height * 0.0015,
             color: Colors.white,
@@ -267,14 +283,38 @@ class _TransactTableState extends State<TransactTable> {
                   _checkBoxTile(size, (value) {
                     setState(() {});
                     petitionStatus = !petitionStatus;
+                    _uncheckRest(1);
+                    if (petitionStatus == true) {
+                      type = 1;
+                      filter = true;
+                    } else {
+                      type = null;
+                      filter = false;
+                    }
                   }, petitionStatus, 'Petición', Colors.white),
                   _checkBoxTile(size, (value) {
                     setState(() {});
                     complaingStatus = !complaingStatus;
+                    _uncheckRest(2);
+                    if (complaingStatus == true) {
+                      type = 2;
+                      filter = true;
+                    } else {
+                      type = null;
+                      filter = false;
+                    }
                   }, complaingStatus, 'Queja', Colors.white),
                   _checkBoxTile(size, (value) {
                     setState(() {});
                     reclaimStatus = !reclaimStatus;
+                    _uncheckRest(3);
+                    if (reclaimStatus == true) {
+                      type = 3;
+                      filter = true;
+                    } else {
+                      type = null;
+                      filter = false;
+                    }
                   }, reclaimStatus, 'Reclamo', Colors.white)
                 ],
               ),
@@ -287,10 +327,26 @@ class _TransactTableState extends State<TransactTable> {
                   _checkBoxTile(size, (value) {
                     setState(() {});
                     adviceStatus = !adviceStatus;
+                    _uncheckRest(4);
+                    if (adviceStatus == true) {
+                      type = 4;
+                      filter = true;
+                    } else {
+                      type = null;
+                      filter = false;
+                    }
                   }, adviceStatus, 'Sugerencia', Colors.white),
                   _checkBoxTile(size, (value) {
                     setState(() {});
                     congratulationStatus = !congratulationStatus;
+                    _uncheckRest(5);
+                    if (congratulationStatus == true) {
+                      type = 5;
+                      filter = true;
+                    } else {
+                      type = null;
+                      filter = false;
+                    }
                   }, congratulationStatus, 'Felicitación', Colors.white),
                 ],
               ),
@@ -382,5 +438,38 @@ class _TransactTableState extends State<TransactTable> {
         ],
       ),
     );
+  }
+
+  void _uncheckRest(int index) {
+    if (index == 1) {
+      adviceStatus = false;
+      complaingStatus = false;
+      reclaimStatus = false;
+      congratulationStatus = false;
+    }
+    if (index == 2) {
+      adviceStatus = false;
+      petitionStatus = false;
+      reclaimStatus = false;
+      congratulationStatus = false;
+    }
+    if (index == 3) {
+      adviceStatus = false;
+      petitionStatus = false;
+      complaingStatus = false;
+      congratulationStatus = false;
+    }
+    if (index == 4) {
+      reclaimStatus = false;
+      petitionStatus = false;
+      complaingStatus = false;
+      congratulationStatus = false;
+    }
+    if (index == 5) {
+      reclaimStatus = false;
+      petitionStatus = false;
+      complaingStatus = false;
+      adviceStatus = false;
+    }
   }
 }

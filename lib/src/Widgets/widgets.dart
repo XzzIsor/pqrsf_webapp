@@ -18,6 +18,7 @@ export 'package:pqrsf_webapp/src/Widgets/LoginForm/login_custom_form.dart';
 //Consult
 export 'package:pqrsf_webapp/src/Widgets/Consult/search_row.dart';
 export 'package:pqrsf_webapp/src/Widgets/Consult/info_panel.dart';
+export 'package:pqrsf_webapp/src/Widgets/Consult/trace_bar.dart';
 
 //Inform
 export 'package:pqrsf_webapp/src/Widgets/Inform/inform_generator.dart';

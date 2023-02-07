@@ -13,7 +13,7 @@ class Transact {
     required this.nombrePeticionario,
     required this.idTipoTramite,
     required this.correo,
-    required this.numeroVu,
+    required this.numeroVU,
     required this.celular,
     required this.fechaRecepcion,
     required this.telefono,
@@ -29,7 +29,7 @@ class Transact {
   String nombrePeticionario;
   int idTipoTramite;
   String correo;
-  int numeroVu;
+  int numeroVU;
   String celular;
   String fechaRecepcion;
   String telefono;
@@ -45,7 +45,7 @@ class Transact {
         nombrePeticionario: json["nombrePeticionario"],
         idTipoTramite: json["idTipoTramite"],
         correo: json["correo"],
-        numeroVu: json["numeroVU"],
+        numeroVU: json["numeroVU"],
         celular: json["celular"],
         fechaRecepcion: json["fechaRecepcion"],
         telefono: json["telefono"],
@@ -62,7 +62,7 @@ class Transact {
         "nombrePeticionario": nombrePeticionario,
         "idTipoTramite": idTipoTramite,
         "correo": correo,
-        "numeroVU": numeroVu,
+        "numeroVU": numeroVU,
         "celular": celular,
         "fechaRecepcion": fechaRecepcion,
         "telefono": telefono,

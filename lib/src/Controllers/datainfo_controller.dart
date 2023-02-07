@@ -12,6 +12,18 @@ class DataInfoController extends ChangeNotifier {
   final List<ReceptionType> _receptionTypes = [];
   final List<PeticionaryType> _peticionaryTypes = [];
 
+  int indexPeticionryType = -1;
+  int indexDependency = -1;
+  int indexReceptionType = -1;
+  int indexTransactTypes = -1;
+
+  void resetIndexes() {
+    indexPeticionryType = -1;
+    indexDependency = -1;
+    indexReceptionType = -1;
+    indexTransactTypes = -1;
+  }
+
   List<String> getDependencies() {
     List<String> values = [];
 
@@ -132,10 +144,11 @@ class DataInfoController extends ChangeNotifier {
     }
   }
 
-  Future<void> getAllData() async {
+  Future<bool> getAllData() async {
     await _getDependencies();
     await _getPeticionaryTypes();
     await _getReceptionTypes();
     await _getTransactTypes();
+    return true;
   }
 }

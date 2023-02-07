@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'PQRSF Unicauca',
-      initialRoute: '/register',
+      initialRoute: '/show',
       routes: {
         '/register': (_) => const RegisterPage(),
         '/show': (_) => const ShowPage(),

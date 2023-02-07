@@ -8,8 +8,11 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => DataInfoController(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => DataInfoController()),
+        ChangeNotifierProvider(create: (context) => TransactController())
+      ],
       child: Scaffold(
         floatingActionButton: NavigationButton(),
         body: Center(child: RegisterForm()),

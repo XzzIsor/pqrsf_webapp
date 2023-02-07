@@ -42,7 +42,7 @@ class SearchRow extends StatelessWidget {
                 icon: Icons.search,
                 hintText: '###########',
                 onChange: (value) {},
-                emailType: false,
+                numberType: false,
                 obscureText: false),
           ),
           SizedBox(width: margin),

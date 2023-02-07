@@ -8,7 +8,7 @@ class CustomTextField extends StatefulWidget {
       required this.icon,
       required this.hintText,
       required this.onChange,
-      required this.emailType,
+      required this.numberType,
       required this.obscureText,
       this.initialValue,
       this.inputFormatters,
@@ -24,7 +24,7 @@ class CustomTextField extends StatefulWidget {
   final int? maxLines;
   final Function(String) onChange;
   final String? Function(String?)? validator;
-  final bool emailType;
+  final bool numberType;
   final bool obscureText;
   final String? initialValue;
   final List<TextInputFormatter>? inputFormatters;
@@ -59,7 +59,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         focusNode: _focusNode,
         onChanged: widget.onChange,
         keyboardType:
-            widget.emailType ? TextInputType.emailAddress : TextInputType.text,
+            widget.numberType ? TextInputType.number : TextInputType.text,
         decoration: InputDecoration(
             filled: true,
             fillColor: Colors.white,

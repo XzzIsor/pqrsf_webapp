@@ -1,19 +1,25 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:pqrsf_webapp/src/Models/models.dart';
+import 'package:provider/provider.dart';
+
+import '../Controllers/controllers.dart';
 
 class CustomDropdown extends StatefulWidget {
-  CustomDropdown(
-      {Key? key,
-      required this.items,
-      required this.label,
-      this.iconColor,
-      required this.icon})
-      : super(key: key);
+  const CustomDropdown({
+    Key? key,
+    required this.items,
+    required this.label,
+    this.iconColor,
+    required this.icon,
+    required this.type,
+  }) : super(key: key);
 
   final List<String> items;
   final String label;
   final Color? iconColor;
   final IconData icon;
+  final int type;
   @override
   State<CustomDropdown> createState() => _CustomDropdownState();
 }
@@ -23,6 +29,9 @@ class _CustomDropdownState extends State<CustomDropdown> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    DataInfoController dataInfoController =
+        Provider.of<DataInfoController>(context);
+    final formKey = GlobalKey<FormState>();
 
     return SizedBox(
       width: size.width * 0.25,
@@ -36,6 +45,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
           SizedBox(
             width: size.width * 0.226,
             child: DropdownButtonFormField2(
+              key: formKey,
               decoration: InputDecoration(
                 isDense: true,
                 contentPadding: EdgeInsets.zero,
@@ -80,13 +90,29 @@ class _CustomDropdownState extends State<CustomDropdown> {
                       ))
                   .toList(),
               validator: (value) {
-                if (value == null) {
+                if (value == widget.label) {
                   return 'Por favor ${widget.label}';
                 }
                 return null;
               },
               onChanged: (value) {
-                //Do something when changing the item if you want.
+                int index = widget.items.indexOf(value.toString());
+
+                if (widget.type == 1) {
+                  dataInfoController.indexDependency = index + 1;
+                }
+
+                if (widget.type == 2) {
+                  dataInfoController.indexPeticionryType = index + 1;
+                }
+
+                if (widget.type == 3) {
+                  dataInfoController.indexReceptionType = index + 1;
+                }
+
+                if (widget.type == 4) {
+                  dataInfoController.indexTransactTypes = index + 1;
+                }
               },
               onSaved: (value) {
                 selectedValue = value.toString();
