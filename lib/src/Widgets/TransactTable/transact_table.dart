@@ -89,15 +89,15 @@ class _TransactTableState extends State<TransactTable> {
 
                               if (_confirmDate(rep)) {
                                 if (intimeStatus) {
-                                  if (difference <= 7) {
+                                  if (difference <= -7) {
                                     tableTrasacts.add(element);
                                   }
                                 } else if (overdueStatus) {
-                                  if (difference > 7 && difference <= 14) {
+                                  if (difference < 0 && difference > -7) {
                                     tableTrasacts.add(element);
                                   }
                                 } else if (failStatus) {
-                                  if (difference > 15) {
+                                  if (difference >= 0) {
                                     tableTrasacts.add(element);
                                   }
                                 } else {
