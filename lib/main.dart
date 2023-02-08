@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'PQRSF Unicauca',
+      title: 'PQRSF Unicauca App',
       initialRoute: '/register',
       routes: {
         '/register': (_) => const RegisterPage(),
