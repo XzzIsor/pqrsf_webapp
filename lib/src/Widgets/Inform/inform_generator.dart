@@ -117,7 +117,7 @@ class _InformGeneratorState extends State<InformGenerator> {
         child: Text(label,
             style: TextStyle(
                 color: textColors[index],
-                fontSize: size.aspectRatio * 15,
+                fontSize: size.aspectRatio * 12,
                 fontWeight: FontWeight.bold)),
         onTap: () {
           if (selectedIndex != -1) {

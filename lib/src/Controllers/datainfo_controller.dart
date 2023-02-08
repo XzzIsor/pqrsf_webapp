@@ -82,9 +82,7 @@ class DataInfoController extends ChangeNotifier {
       for (var element in data) {
         _dependencies.add(Dependency.fromJson(element));
       }
-    } else {
-      print(jsonDecode(response.body));
-    }
+    } else {}
   }
 
   Future<void> _getTransactTypes() async {
@@ -101,9 +99,7 @@ class DataInfoController extends ChangeNotifier {
       for (var element in data) {
         _transactsTypes.add(TransactType.fromJson(element));
       }
-    } else {
-      print(jsonDecode(response.body));
-    }
+    } else {}
   }
 
   Future<void> _getReceptionTypes() async {
@@ -120,9 +116,7 @@ class DataInfoController extends ChangeNotifier {
       for (var element in data) {
         _receptionTypes.add(ReceptionType.fromJson(element));
       }
-    } else {
-      print(jsonDecode(response.body));
-    }
+    } else {}
   }
 
   Future<void> _getPeticionaryTypes() async {
@@ -139,9 +133,7 @@ class DataInfoController extends ChangeNotifier {
       for (var element in data) {
         _peticionaryTypes.add(PeticionaryType.fromJson(element));
       }
-    } else {
-      print(jsonDecode(response.body));
-    }
+    } else {}
   }
 
   Future<bool> getAllData() async {

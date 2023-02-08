@@ -14,7 +14,8 @@ class CustomTextField extends StatefulWidget {
       this.inputFormatters,
       this.validator,
       this.counterText,
-      this.maxLines})
+      this.maxLines,
+      this.iconColor})
       : super(key: key);
 
   final String label;
@@ -27,13 +28,14 @@ class CustomTextField extends StatefulWidget {
   final bool numberType;
   final bool obscureText;
   final String? initialValue;
+  final Color? iconColor;
   final List<TextInputFormatter>? inputFormatters;
 
   @override
-  _CustomTextFieldState createState() => _CustomTextFieldState();
+  CustomTextFieldState createState() => CustomTextFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
+class CustomTextFieldState extends State<CustomTextField> {
   FocusNode? _focusNode;
 
   @override
@@ -63,7 +65,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         decoration: InputDecoration(
             filled: true,
             fillColor: Colors.white,
-            icon: Icon(widget.icon, color: Colors.white),
+            icon: Icon(widget.icon, color: widget.iconColor ?? Colors.white),
             labelText: widget.label,
             labelStyle: TextStyle(
                 color: _focusNode!.hasFocus ? Colors.black : Colors.black,

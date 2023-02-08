@@ -1,8 +1,6 @@
 // To parse this JSON data, do
 //
 //     final peticionaryType = peticionaryTypeFromJson(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 PeticionaryType peticionaryTypeFromJson(String str) =>

@@ -19,7 +19,11 @@ export 'package:pqrsf_webapp/src/Widgets/LoginForm/login_custom_form.dart';
 export 'package:pqrsf_webapp/src/Widgets/Consult/search_row.dart';
 export 'package:pqrsf_webapp/src/Widgets/Consult/info_panel.dart';
 export 'package:pqrsf_webapp/src/Widgets/Consult/trace_bar.dart';
+export 'package:pqrsf_webapp/src/Widgets/Consult/trace_dialog.dart';
 
 //Inform
 export 'package:pqrsf_webapp/src/Widgets/Inform/inform_generator.dart';
 export 'package:pqrsf_webapp/src/Widgets/Inform/download_section.dart';
+
+//Trace Register
+export 'package:pqrsf_webapp/src/Widgets/TraceRegister/trace_form.dart';

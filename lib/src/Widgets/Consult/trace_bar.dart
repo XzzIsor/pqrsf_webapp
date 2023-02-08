@@ -1,17 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:pqrsf_webapp/src/Widgets/widgets.dart';
+import 'package:provider/provider.dart';
+
+import '../../Controllers/controllers.dart';
+import '../../Models/models.dart';
 
 class TraceBar extends StatefulWidget {
-  TraceBar({Key? key}) : super(key: key);
+  const TraceBar({Key? key}) : super(key: key);
 
   @override
   State<TraceBar> createState() => _TraceBarState();
 }
 
 class _TraceBarState extends State<TraceBar> {
+  Color barColor = Colors.white;
+  double percent = 0;
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
+    TransactController transactController =
+        Provider.of<TransactController>(context);
+
+    TransactShow transact = transactController.selectedTransact;
+    List<Traza> trace = transact.traza;
+
+    if (transact.asunto != "") {
+      _position(transact, size);
+    }
 
     return Center(
       child: Container(
@@ -22,18 +41,22 @@ class _TraceBarState extends State<TraceBar> {
           backgroundColor: Colors.white,
           barRadius: const Radius.circular(50),
           lineHeight: size.height * 0.02,
-          curve: Curves.elasticIn,
-          progressColor: Colors.green,
-          percent: 0.8,
-          center: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: _listTrace(['A', 'Ve', 'Maria'], size)),
+          animationDuration: 1000,
+          curve: Curves.bounceIn,
+          progressColor: barColor,
+          percent: percent,
+          center: SizedBox(
+            width: (size.width * 0.9) * percent,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: transact.asunto == "" ? [] : _listTrace(trace, size)),
+          ),
         ),
       ),
     );
   }
 
-  List<GestureDetector> _listTrace(List<String> info, Size size) {
+  List<GestureDetector> _listTrace(List<Traza> info, Size size) {
     List<GestureDetector> balls = [];
 
     for (int i = 0; i < info.length; i++) {
@@ -46,10 +69,37 @@ class _TraceBarState extends State<TraceBar> {
             color: Colors.white,
           ),
         ),
-        onTap: () {},
+        onTap: () {
+          TraceDialog().showTraceDialog(context, info[i]);
+        },
       ));
     }
 
     return balls;
+  }
+
+  void _position(TransactShow transact, Size size) {
+    DateFormat formatter = DateFormat("dd/MM/yyyy");
+    DateTime actual = DateTime.now();
+    DateTime time = formatter.parse(transact.fechaVencimiento);
+    int difference = time.difference(actual).inDays;
+
+    if (difference >= 7) {
+      barColor = Colors.green;
+    }
+
+    if (difference < 7 && difference >= 0) {
+      barColor = Colors.yellow;
+    }
+
+    if (difference <= 0) {
+      barColor = Colors.red;
+    }
+
+    if (difference <= 0) {
+      percent = 1;
+    } else {
+      percent = (15 - difference) / 15;
+    }
   }
 }

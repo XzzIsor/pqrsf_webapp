@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pqrsf_webapp/src/Widgets/background_theme.dart';
 import 'package:pqrsf_webapp/src/Widgets/widgets.dart';
 
 class InformPage extends StatelessWidget {

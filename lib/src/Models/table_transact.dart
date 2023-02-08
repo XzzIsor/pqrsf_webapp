@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 TableTransact tableTransactFromJson(String str) =>

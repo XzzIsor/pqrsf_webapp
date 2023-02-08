@@ -1,3 +1,4 @@
+export 'package:pqrsf_webapp/src/Models/transact_show.dart';
 export 'package:pqrsf_webapp/src/Models/table_transact.dart';
 export 'package:pqrsf_webapp/src/Models/dependency.dart';
 export 'package:pqrsf_webapp/src/Models/peticionary_type.dart';

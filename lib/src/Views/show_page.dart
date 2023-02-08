@@ -9,7 +9,7 @@ class ShowPage extends StatelessWidget {
     return Scaffold(
       floatingActionButton: NavigationButton(),
       body: Stack(
-        children: [BackgroundTheme(), TransactTable()],
+        children: const [BackgroundTheme(), TransactTable()],
       ),
     );
   }

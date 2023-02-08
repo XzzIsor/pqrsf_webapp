@@ -1,14 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class InfoPanel extends StatelessWidget {
+import '../../Controllers/controllers.dart';
+import '../../Models/models.dart';
+
+class InfoPanel extends StatefulWidget {
   const InfoPanel({Key? key}) : super(key: key);
 
   @override
+  State<InfoPanel> createState() => _InfoPanelState();
+}
+
+class _InfoPanelState extends State<InfoPanel> {
+  int index = 0;
+
+  @override
   Widget build(BuildContext context) {
+    Object? args = ModalRoute.of(context)!.settings.arguments;
+
     final Size size = MediaQuery.of(context).size;
 
     final styleText =
-        TextStyle(fontSize: size.aspectRatio * 15, fontWeight: FontWeight.bold);
+        TextStyle(fontSize: size.aspectRatio * 12, fontWeight: FontWeight.bold);
+
+    TransactController transactController =
+        Provider.of<TransactController>(context);
+
+    if (args != null && index == 0) {
+      transactController.getTransactByID(int.parse(args.toString()));
+      index++;
+    }
+    TransactShow info = transactController.selectedTransact;
 
     return Center(
       child: Container(
@@ -25,15 +47,15 @@ class InfoPanel extends StatelessWidget {
             child: Column(
               children: [
                 Center(
-                  child: Text('Titulo', style: styleText),
+                  child: Text('NúmeroVU', style: styleText),
                 ),
                 Row(
                   children: [
-                    _ColumnInfo1(size: size, styleText: styleText),
+                    _columnInfo1(size, styleText, info),
                     SizedBox(width: size.width * 0.14),
-                    _ColumnInfo2(size: size, styleText: styleText),
+                    _columnInfo2(size, styleText, info),
                     SizedBox(width: size.width * 0.14),
-                    _DescriptionCamp(size: size, styleText: styleText)
+                    _descriptionCamp(size, styleText, info)
                   ],
                 )
               ],
@@ -43,20 +65,8 @@ class InfoPanel extends StatelessWidget {
       ),
     );
   }
-}
 
-class _DescriptionCamp extends StatelessWidget {
-  const _DescriptionCamp({
-    super.key,
-    required this.size,
-    required this.styleText,
-  });
-
-  final Size size;
-  final TextStyle styleText;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _descriptionCamp(Size size, TextStyle styleText, TransactShow info) {
     return SizedBox(
       width: size.width * 0.19,
       child: Column(
@@ -77,7 +87,7 @@ class _DescriptionCamp extends StatelessWidget {
             child: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.all(size.aspectRatio * 6),
-                child: Text(' '),
+                child: Text(info.descripcion),
               ),
             ),
           )
@@ -85,62 +95,8 @@ class _DescriptionCamp extends StatelessWidget {
       ),
     );
   }
-}
 
-class _ColumnInfo2 extends StatelessWidget {
-  const _ColumnInfo2({
-    super.key,
-    required this.size,
-    required this.styleText,
-  });
-
-  final Size size;
-  final TextStyle styleText;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: size.width * 0.19,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'E-Mail: \n'
-            'Celular: \n'
-            'Dirección: \n',
-            style: styleText,
-            textAlign: TextAlign.start,
-            overflow: TextOverflow.ellipsis,
-          ),
-          SizedBox(
-            height: size.height * 0.05,
-          ),
-          Text(
-            'Recepción: \n'
-            'Vencimiento: \n'
-            'Medio De Recepción: \n',
-            style: styleText,
-            textAlign: TextAlign.start,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ColumnInfo1 extends StatelessWidget {
-  const _ColumnInfo1({
-    super.key,
-    required this.size,
-    required this.styleText,
-  });
-
-  final Size size;
-  final TextStyle styleText;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _columnInfo1(Size size, TextStyle styleText, TransactShow info) {
     Color colorButton = Colors.grey;
 
     return SizedBox(
@@ -149,10 +105,10 @@ class _ColumnInfo1 extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Asunto: \n'
-            'Tipo PQRSF: \n'
-            'Peticionario \n'
-            'Tipo Peticionario \n',
+            'Asunto: ${info.asunto}\n'
+            'Tipo PQRSF: ${info.tipoPqrsf}\n'
+            'Peticionario ${info.peticionario}\n'
+            'Tipo Peticionario ${info.tipoPeticionario}\n',
             style: styleText,
             textAlign: TextAlign.start,
             overflow: TextOverflow.ellipsis,
@@ -162,12 +118,15 @@ class _ColumnInfo1 extends StatelessWidget {
             width: size.width * 0.19,
           ),
           Text(
-            'Número de Oficio: \n'
-            'Dependencia \n'
-            'Oficio de Respuesta: \n',
+            'Número de Oficio: ${info.numeroOficio}\n'
+            'Dependencia ${info.dependencia}\n'
+            'Número VU: ${info.id}',
             style: styleText,
             textAlign: TextAlign.start,
             overflow: TextOverflow.ellipsis,
+          ),
+          SizedBox(
+            height: size.height * 0.03,
           ),
           Padding(
             padding: EdgeInsets.only(left: size.width * 0.03),
@@ -186,6 +145,36 @@ class _ColumnInfo1 extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _columnInfo2(Size size, TextStyle styleText, TransactShow info) {
+    return SizedBox(
+      width: size.width * 0.19,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'E-Mail: ${info.email}\n'
+            'Celular: ${info.celular}\n'
+            'Dirección: ${info.direccion}\n',
+            style: styleText,
+            textAlign: TextAlign.start,
+            overflow: TextOverflow.ellipsis,
+          ),
+          SizedBox(
+            height: size.height * 0.05,
+          ),
+          Text(
+            'Recepción: ${info.fechaRecepcion}\n'
+            'Vencimiento: ${info.fechaVencimiento}\n'
+            'Medio De Recepción: ${info.medioRecepcion}\n',
+            style: styleText,
+            textAlign: TextAlign.start,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

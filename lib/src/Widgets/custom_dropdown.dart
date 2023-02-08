@@ -1,6 +1,5 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:pqrsf_webapp/src/Models/models.dart';
 import 'package:provider/provider.dart';
 
 import '../Controllers/controllers.dart';
@@ -51,7 +50,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                 contentPadding: EdgeInsets.zero,
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(color: Colors.black)),
+                    borderSide: const BorderSide(color: Colors.black)),
               ),
               isExpanded: true,
               hint: Text(

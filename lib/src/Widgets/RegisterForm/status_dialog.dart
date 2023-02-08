@@ -14,7 +14,7 @@ class StatusDialog {
               width: size.width * 0.3,
               height: size.height * 0.3,
               decoration: BoxDecoration(
-                  color: Color.fromRGBO(47, 45, 125, 1),
+                  color: const Color.fromRGBO(47, 45, 125, 1),
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(color: Colors.white)),
               child: Center(

@@ -1,5 +1,3 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pqrsf_webapp/src/Controllers/controllers.dart';
@@ -9,7 +7,7 @@ import 'package:pqrsf_webapp/src/Widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class RegisterForm extends StatefulWidget {
-  RegisterForm({Key? key}) : super(key: key);
+  const RegisterForm({Key? key}) : super(key: key);
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
@@ -31,6 +29,7 @@ class _RegisterFormState extends State<RegisterForm> {
       idDependencia: -1,
       idTipoRecepcion: -1,
       descripcion: '',
+      traza: [],
       idTipoTipoPeticionario: -1);
   String dateInitial = 'Fecha de Recepción';
   String dateFinal = 'Fecha de Venciomiento';
@@ -108,7 +107,6 @@ class _RegisterFormState extends State<RegisterForm> {
       child: Column(
         children: [
           CustomTextField(
-            inputFormatters: [],
             label: 'Número VU',
             icon: Icons.numbers,
             hintText: 'Ej: 123',
@@ -217,12 +215,14 @@ class _RegisterFormState extends State<RegisterForm> {
                         lastDate: DateTime.now());
 
                     setState(() {
-                      DateFormat formatter = DateFormat("dd/MM/yy");
-                      dateInitial = formatter.format(date!);
-                      DateTime aux = date.add(const Duration(days: 15));
-                      dateFinal = formatter.format(aux);
-                      DateFormat formatter2 = DateFormat("dd/MM/yyyy");
-                      newTransact.fechaRecepcion = formatter2.format(date);
+                      if (date != null) {
+                        DateFormat formatter = DateFormat("dd/MM/yy");
+                        dateInitial = formatter.format(date);
+                        DateTime aux = date.add(const Duration(days: 15));
+                        dateFinal = formatter.format(aux);
+                        DateFormat formatter2 = DateFormat("dd/MM/yyyy");
+                        newTransact.fechaRecepcion = formatter2.format(date);
+                      }
                     });
                   },
                   icon: const Icon(
@@ -365,8 +365,12 @@ class _RegisterFormState extends State<RegisterForm> {
             numberType: false,
             obscureText: false,
             validator: (value) {
-              if (value == null || value == '') {
-                return "Ingrese un correo electrónico";
+              RegExp exp = RegExp(
+                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+              if (value == null ||
+                  value == '' ||
+                  exp.hasMatch(value) == false) {
+                return "Ingrese un correo electrónico válido";
               }
               return null;
             },
@@ -389,7 +393,6 @@ class _RegisterFormState extends State<RegisterForm> {
       Size size, DataInfoController controller, BuildContext context) {
     Color messageColor = Colors.black;
     Color buttonColor = Colors.white;
-    bool hover = false;
 
     TransactController transactController =
         Provider.of<TransactController>(context);
